@@ -1,6 +1,6 @@
 # probe-rs-GUI
 
-[[中文](./readme.md)] [English]
+[[中文](./README.md)] [English]
 
 ## First of all, thanks for the following project
 
