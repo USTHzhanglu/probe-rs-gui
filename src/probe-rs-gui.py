@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import pathlib
 import tkinter as tk
 import tkinter.ttk as ttk
 from pygubu.widgets.pathchooserinput import PathChooserInput
@@ -47,9 +46,10 @@ class Cfg:
                 self.pack_yaml = self.configure.get("pack_yaml")
                 self.speed = self.configure.get("speed")
                 self.chip = self.configure.get("chip")
-
+                self.format = self.bin_path.split('.')[-1]
                 if(os.path.isabs(self.pack_yaml) == False):
                     self.pack_yaml = os.path.dirname(os.path.abspath(self.config_path)) +'\\' + self.pack_yaml
+                print("format: " + self.format)
                 print("chip: " + self.chip)
                 print("pack path: " + self.pack_yaml)
                 print("speed: " + self.speed)
