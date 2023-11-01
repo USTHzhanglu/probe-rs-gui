@@ -1,0 +1,437 @@
+name: HC32F4A0-Series
+generated_from_pack: true
+pack_file_release: 1.0.7
+variants:
+- name: HC32F4A0PGHB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x100000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_1m
+  - hc32f4a0_otp
+- name: HC32F4A0PGTB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x100000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_1m
+  - hc32f4a0_otp
+- name: HC32F4A0PIHB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x200000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_2m
+  - hc32f4a0_otp
+- name: HC32F4A0PITB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x200000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_2m
+  - hc32f4a0_otp
+- name: HC32F4A0RGTB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x100000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_1m
+  - hc32f4a0_otp
+- name: HC32F4A0RITB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x200000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_2m
+  - hc32f4a0_otp
+- name: HC32F4A0SGHB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x100000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_1m
+  - hc32f4a0_otp
+- name: HC32F4A0SGTB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x100000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_1m
+  - hc32f4a0_otp
+- name: HC32F4A0SIHB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x200000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_2m
+  - hc32f4a0_otp
+- name: HC32F4A0SITB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x200000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_2m
+  - hc32f4a0_otp
+- name: HC32F4A0TIHB
+  cores:
+  - name: main
+    type: armv7em
+    core_access_options: !Arm
+      ap: 0
+      psel: 0
+  memory_map:
+  - !Ram
+    name: IRAM1
+    range:
+      start: 0x1ffe0000
+      end: 0x20060000
+    cores:
+    - main
+  - !Nvm
+    name: IROM1
+    range:
+      start: 0x0
+      end: 0x200000
+    is_boot_memory: true
+    cores:
+    - main
+  - !Generic
+    name: IROM2
+    range:
+      start: 0x3000000
+      end: 0x3001800
+    cores:
+    - main
+  flash_algorithms:
+  - hc32f4a0_2m
+  - hc32f4a0_otp
+flash_algorithms:
+- name: hc32f4a0_1m
+  description: HC32F4A0 1MB Flash
+  default: true
+  instructions: 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
+  load_address: 0x1ffe0020
+  pc_init: 0x3dd
+  pc_uninit: 0x419
+  pc_program_page: 0x3ed
+  pc_erase_sector: 0x9d
+  pc_erase_all: 0x95
+  data_section_offset: 0x5ec
+  flash_properties:
+    address_range:
+      start: 0x0
+      end: 0x100000
+    page_size: 0x400
+    erased_byte_value: 0xff
+    program_page_timeout: 100
+    erase_sector_timeout: 3000
+    sectors:
+    - size: 0x2000
+      address: 0x0
+  stack_size: 16384
+- name: hc32f4a0_otp
+  description: HC32F4A0 OTP Flash
+  default: true
+  instructions: QLpwR0C6cEfAunBHwLpwR0/qMABwRwAAT+owAHBHAAAAIAVJCHAFSQhgASACSSY5gfgqAHBHAAAmQAVAGAQBQA1IAGgA8AEAGLEMSAxJCGAC4AxICkkIYAUgC0kIYAtIC0kIYgAgCkkqMQhwBSAISYH4JgBwRwAAhAYBQIFZICIAQQVAgUcgIhgEAUAQYxEAAEAFQBC1APAR+BC9ELUERiBGAPAX+BC9ACADSQhgQB4BSRw5CGBwRxwEAUAQtQAkAPBI+QJIAPAF+AAgEL0AAAAQAAMwtQRGACUA8Dv5BCAZSQhgACAgYAfgbRwXSIVCA9MA8C/5ASAwvRNIAB0AaAD0gHCw9YB/B9APSAAdAGgA8IBwsPGAf+fRB+AKSAgwAGhA8BAQCEkIMQhgBkgAHQBoAPAQEAAo8NEDSQhgAPAJ+QAg2OcAABwEAUCAGgYAALUA8P/4QPIjEBdJCGBD8hAgCGBP8P8wFEkIYAkdCGAJHQhgCR0IYAkdCGAJHQhgCR0IYAkdCGANSAtJCR0IYMBDCGALSAhJGDEIYMASCR0IYEryAVAISQiA//c5///3R/8A8M/4AL0ABAFAkAUBQGdFIwEFAAgA/kMFQC3p+EEFRgxGFkZJ9kBAAJCwRkDyAxAvSQhgL0ZJ9kBAAJAAvwDwsPjY+AAAOGAAIACQDOAAmEAcAJBJ9kBBAJiIQgTTAPCg+AEgvej4gSFIAB0AaADwEAAQKOvRB+AdSAgwAGhA8BAAGkkIMQhgGUgAHQBoAPAQABAo8NAI8QQIPx0kHwQszdIAIBJJCGAAkAvgAJhAHACQSfZAQQCYiEID0wDwcfgBIM/nCkgAHQBoAPSAcLD1gH8H0AZIAB0AaADwgHCw8YB/49EA8F34ACC75wAAHAQBQHC1BEYNRhZG//dQ/wAgcL1wtQRGDUYWRjJGKUYgRv/3g/9wvQJIA0kIYANICGBwRyMB//8IlARAEDL//xC1BEb/9+D+ACAQvfC1BEYNRgAjACYAJyZGACEH4Fb4BMsQaIRFANAE4BIdSRyx65UP9NMAvzdGACMG4Bf4AcvQXIRFANAE4FscBfADAJhC9NgAvwTrgQAYRPC9AkgDSYhgA0iIYHBHIwH//wCQBEAQMv//ALUHSABoAPSAMAi5APBc+ANIAGgA8AEACLkA8An4AL2ABgFAAL8BHqDxAQD70XBHELUjSABogrIiSABowPOBBCBIAGjA8wMjDLmSEQjgASwB0ZISBOACLAHREhMA4JITC7kBIADgACAPKwHRASEA4AAhCEMQsf/3ff8g4APwAQAYseK5//d2/xngA/ACAAIoBNEBKhPR//dt/xDgA/AEAAQoBNECKgrR//dk/wfgA/AIAAgoA9EDKgHR//db/xC9BJQEQIAGAUAQtSNIQGiCsiJIAGjA84FEIEgAaMDzA2MMuZIRCOABLAHRkhIE4AIsAdESEwDgkhMLuQEgAOAAIA8rAdEBIQDgACEIQxCx//dr/yDgA/ABABix4rn/92T/GeAD8AIAAigE0QEqE9H/91v/EOAD8AQABCgE0QIqCtH/91L/B+AD8AgACCgD0QMqAdH/90n/EL0AkARAgAYBQAAAAAA=
+  load_address: 0x1ffe0020
+  pc_init: 0x2a5
+  pc_uninit: 0x2e1
+  pc_program_page: 0x2b5
+  pc_erase_sector: 0x9d
+  pc_erase_all: 0x95
+  data_section_offset: 0x4b4
+  flash_properties:
+    address_range:
+      start: 0x3000000
+      end: 0x3001800
+    page_size: 0x1800
+    erased_byte_value: 0xff
+    program_page_timeout: 100
+    erase_sector_timeout: 3000
+    sectors:
+    - size: 0x1800
+      address: 0x0
+  stack_size: 16384
+- name: hc32f4a0_2m
+  description: HC32F4A0 2MB Flash
+  default: true
+  instructions: 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
+  load_address: 0x1ffe0020
+  pc_init: 0x3dd
+  pc_uninit: 0x419
+  pc_program_page: 0x3ed
+  pc_erase_sector: 0x9d
+  pc_erase_all: 0x95
+  data_section_offset: 0x5ec
+  flash_properties:
+    address_range:
+      start: 0x0
+      end: 0x200000
+    page_size: 0x800
+    erased_byte_value: 0xff
+    program_page_timeout: 100
+    erase_sector_timeout: 3000
+    sectors:
+    - size: 0x2000
+      address: 0x0
+  stack_size: 16384

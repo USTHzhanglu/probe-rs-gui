@@ -1,0 +1,7 @@
+altgraph==0.17.4
+packaging==23.2
+pefile==2023.2.7
+pygubu==0.31
+pyinstaller==6.1.0
+pyinstaller-hooks-contrib==2023.10
+pywin32-ctypes==0.2.2
