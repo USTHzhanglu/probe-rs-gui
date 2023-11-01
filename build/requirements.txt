@@ -5,3 +5,4 @@ pygubu==0.31
 pyinstaller==6.1.0
 pyinstaller-hooks-contrib==2023.10
 pywin32-ctypes==0.2.2
+pyyaml== 6.0.1
