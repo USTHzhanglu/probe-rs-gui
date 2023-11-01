@@ -11,8 +11,6 @@ import webbrowser
 import yaml
 
 app_path = os.getcwd()
-bin_path = ''
-yaml_path = ''
 version = '0.0.1'
 author = 'USTHzhanglu@outlook.com'
 copyright = 'USTHzhanglu'
@@ -24,6 +22,8 @@ show_about = (
 )
 class Cfg:
     def __init__(self):
+        self.bin_path = ''
+        self.config_path = ''
         self.format = "bin"
         self.pack_yaml = ""
         self.speed = "16000"
@@ -33,11 +33,14 @@ class Cfg:
         self.error = ''
     def upload(self):
         try:
-            with open(yaml_path,'r') as f:
+            with open(self.config_path,'r') as f:
                 self.configure = yaml.load(f,Loader=yaml.FullLoader)
                 self.pack_yaml = self.configure.get("pack_yaml")
                 self.speed = self.configure.get("speed")
                 self.chip = self.configure.get("chip")
+
+                if(os.path.isabs(self.pack_yaml) == False):
+                    self.pack_yaml = os.path.dirname(os.path.abspath(self.config_path)) +'\\' + self.pack_yaml
                 print("chip: " + self.chip)
                 print("pack path: " + self.pack_yaml)
                 print("speed: " + self.speed)
@@ -54,13 +57,12 @@ def download_bin(ui):
     try:
         ret = ''
         #probe-rs download --chip HC32F4A0PIHB --chip-description-path .\HC32F4A0-Series.yaml  --format bin --speed 16000 bootloader.bin
-        cmd = 'start cmd /c \"' + app_path + '\.\probe-rs download ' + \
+        cmd = app_path + '\probe-rs download ' + \
                 '--chip %s '%cfg.chip + '--chip-description-path %s '%cfg.pack_yaml + \
-                '--speed %s '%cfg.speed + '--format %s '%cfg.format + bin_path
-        print(cmd)
+                '--speed %s '%cfg.speed + '--format %s '%cfg.format + cfg.bin_path
+        # print(cmd)
         ret = os.popen(cmd).read()
         print(ret)
-        ui.out.insert('end',ret)
     except Exception as r:
         ui.messagebox.showerror('Flash error',r)
         is_err_download = True
@@ -69,23 +71,29 @@ def download_bin(ui):
             ui.messagebox.showinfo('Flash','Download success')
         else:
             ui.messagebox.showerror('Flash error','download fail')
+        ui.out.edit_undo()
+        ui.out.insert('end','----------Download Finish----------')
 
         
 def erase_bin(ui):
     is_err_erase= False
     try:
         ret = ''
-        ret = os.popen('start cmd /c \"pyocd erase --chip & timeout /t 5 \"').read()
-        ui.out.insert('end',ret)
+        #probe-rs erase --chip HC32F4A0PIHB --chip-description-path .\HC32F4A0-Series.yaml
+        cmd = app_path + '\probe-rs erase ' + \
+                '--chip %s '%cfg.chip + '--chip-description-path %s '%cfg.pack_yaml
+        # print(cmd)
+        ret = os.popen(cmd).read()
     except Exception as r:
-        ui.out.insert('end',r)
-        ui.out.insert('end',"\r\n")
         is_err_erase = True
+        ui.messagebox.showerror('Flash error',r)
     finally:
         if is_err_erase == False:
-            ui.messagebox.Message('Erase success')
+            ui.messagebox.showinfo('Flash','Erase success')
         else:
             ui.messagebox.showerror('Flash error','erase fail')
+        ui.out.edit_undo()
+        ui.out.insert('end','-----------Erase Finish-----------')
 
 
 class std2tk(object): 
@@ -192,23 +200,21 @@ class PyocdApp:
                 webbrowser.open('https://github.com/USTHzhanglu/probe-rs-gui',new=0)      
 
     def download(self):
-        global bin_path
-        global yaml_path
-        bin_path = self.binchooserinput.cget('path')
-        yaml_path = self.binchooserinput2.cget('path')
-        if (bin_path and yaml_path):
+        cfg.bin_path = self.binchooserinput.cget('path')
+        cfg.config_path = self.binchooserinput2.cget('path')
+        if (cfg.bin_path and cfg.config_path):
             self.out.delete('1.0','end')
-            self.out.insert('end',"bin:%s"%(bin_path))
+            self.out.insert('end',"bin:%s"%(cfg.bin_path))
             self.out.insert('end','\r\n')
-            self.out.insert('end',"yaml:%s"%(yaml_path))
+            self.out.insert('end',"yaml:%s"%(cfg.config_path))
             self.out.insert('end','\r\n')
             cfg.upload()
             if(cfg.status == False):
                 tk.messagebox.showerror('Config error',cfg.error)
-            # os.chdir(yaml_path)
-            
-            self.out.insert('end','-----------Downloading------------\r\n')
+            # os.chdir(config_path)
             self.out.edit_separator()
+            self.out.insert('end','-----------Downloading-------------\r\n')
+
             download = threading.Thread(target=download_bin,args=(app,))
             if download.is_alive() is False:
                 download.start() 
@@ -218,16 +224,15 @@ class PyocdApp:
             tk.messagebox.showerror('Path error','please select a valid file')
             
     def erasechip(self):
-        global yaml_path
-        yaml_path = self.binchooserinput2.cget('path')
-        if yaml_path:
+        cfg.config_path = self.binchooserinput2.cget('path')
+        if cfg.config_path:
             self.out.delete('1.0','end')
-            self.out.insert('end',"dir:%s"%(yaml_path))
+            self.out.insert('end',"dir:%s"%(cfg.config_path))
             self.out.insert('end','\r\n')
-            # os.chdir(yaml_path)
-            
+            # os.chdir(config_path)
+            self.out.edit_separator()
             if tk.messagebox.askokcancel("Erase", "erase chip?"):
-                self.out.insert('end','-----------start erase------------\r\n')
+                self.out.insert('end','-----------Start Erase-------------\r\n')
                 erase = threading.Thread(target=erase_bin,args=(app,))
                 if erase.is_alive() is False:
                     erase.start() 
