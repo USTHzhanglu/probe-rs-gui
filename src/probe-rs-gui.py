@@ -10,7 +10,16 @@ import os,sys
 import webbrowser
 import yaml
 
-app_path = os.getcwd()
+import os
+import sys
+#生成资源文件目录访问路径
+def app_path():
+    if getattr(sys, 'frozen', False): #是否Bundle Resource
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
+    return base_path
+
 version = '0.0.1'
 author = 'USTHzhanglu@outlook.com'
 copyright = 'USTHzhanglu'
@@ -57,7 +66,7 @@ def download_bin(ui):
     try:
         ret = ''
         #probe-rs download --chip HC32F4A0PIHB --chip-description-path .\HC32F4A0-Series.yaml  --format bin --speed 16000 bootloader.bin
-        cmd = app_path + '\probe-rs download ' + \
+        cmd = app_path() + '\probe-rs download ' + \
                 '--chip %s '%cfg.chip + '--chip-description-path %s '%cfg.pack_yaml + \
                 '--speed %s '%cfg.speed + '--format %s '%cfg.format + cfg.bin_path
         # print(cmd)
@@ -80,7 +89,7 @@ def erase_bin(ui):
     try:
         ret = ''
         #probe-rs erase --chip HC32F4A0PIHB --chip-description-path .\HC32F4A0-Series.yaml
-        cmd = app_path + '\probe-rs erase ' + \
+        cmd = app_path() + '\probe-rs erase ' + \
                 '--chip %s '%cfg.chip + '--chip-description-path %s '%cfg.pack_yaml
         # print(cmd)
         ret = os.popen(cmd).read()

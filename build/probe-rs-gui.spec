@@ -5,7 +5,7 @@ a = Analysis(
     ['..\\src\\probe-rs-gui.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('../src/probe-rs.exe','.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
