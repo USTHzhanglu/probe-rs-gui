@@ -221,11 +221,11 @@ class PyocdApp:
         
     def menucallback(self, itemid):
         if itemid == 'about':
-            tk.messagebox.showinfo(title="About",message = show_about)
+            self.messagebox.showinfo(title="About",message = show_about)
         elif itemid =='help':
             webbrowser.open('https://github.com/USTHzhanglu/probe-rs-gui/readme.md',new=0)
         elif itemid =='download':  
-            if tk.messagebox.askokcancel("Download", "Go to Github?"):
+            if self.messagebox.askokcancel("Download", "Go to Github?"):
                 webbrowser.open('https://github.com/USTHzhanglu/probe-rs-gui',new=0)      
 
     def download(self):
@@ -239,18 +239,18 @@ class PyocdApp:
             self.out.insert('end','\r\n')
             cfg.upload()
             if(cfg.status == False):
-                tk.messagebox.showerror('Config error',cfg.error)
+                self.messagebox.showerror('Config error',cfg.error)
             # os.chdir(config_path)
             self.out.edit_separator()
             self.out.insert('end','-----------Downloading-------------\r\n')
 
-            download = threading.Thread(target=download_bin,args=(app,))
+            download = threading.Thread(target=download_bin,args=(self,))
             if download.is_alive() is False:
                 download.start() 
             else:
-                tk.messagebox.showerror('Flash error','download fail')
+                self.messagebox.showerror('Flash error','download fail')
         else :
-            tk.messagebox.showerror('Path error','please select a valid file')
+            self.messagebox.showerror('Path error','please select a valid file')
             
     def erasechip(self):
         cfg.config_path = self.binchooserinput2.cget('path')
@@ -260,17 +260,17 @@ class PyocdApp:
             self.out.insert('end','\r\n')
             cfg.upload()
             if(cfg.status == False):
-                tk.messagebox.showerror('Config error',cfg.error)
+                self.messagebox.showerror('Config error',cfg.error)
             self.out.edit_separator()
-            if tk.messagebox.askokcancel("Erase", "erase chip?"):
+            if self.messagebox.askokcancel("Erase", "erase chip?"):
                 self.out.insert('end','-----------Start Erase-------------\r\n')
-                erase = threading.Thread(target=erase_bin,args=(app,))
+                erase = threading.Thread(target=erase_bin,args=(self,))
                 if erase.is_alive() is False:
                     erase.start() 
                 else:
-                    tk.messagebox.showerror('Flash error','erase fail')
+                    self.messagebox.showerror('Flash error','erase fail')
         else :
-            tk.messagebox.showerror('Path error','please select a valid config')
+            self.messagebox.showerror('Path error','please select a valid config')
     
             
     def press_key(self,event):
@@ -278,7 +278,7 @@ class PyocdApp:
         if key_index in [13,32]:
             self.download()
         elif key_index == 27:
-            if tk.messagebox.askokcancel("Quit", "do you wait exit?"):
+            if self.messagebox.askokcancel("Quit", "do you wait exit?"):
                 self.mainwindow.destroy()
 
 
