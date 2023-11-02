@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import subprocess
 import tkinter as tk
 import tkinter.ttk as ttk
 from pygubu.widgets.pathchooserinput import PathChooserInput
@@ -39,6 +40,7 @@ class Cfg:
         self.configure = None
         self.status = False
         self.error = ''
+        self.log = ''
     def upload(self):
         try:
             with open(self.config_path,'r') as f:
@@ -72,16 +74,23 @@ def download_bin(ui):
                 '--chip %s '%cfg.chip + '--chip-description-path %s '%cfg.pack_yaml + \
                 '--speed %s '%cfg.speed + '--format %s '%cfg.format + '--path ' + cfg.bin_path
         # print(cmd)
-        ret = os.popen(cmd).read()
-        print(ret)
+        ret = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        cfg.log = ret.communicate()[0]
+        if(cfg.log!=None):
+            cfg.log = cfg.log.decode()
+            if(cfg.log.find('Finished') < 0):
+                is_err_download =True
+        else:
+            is_err_download =True
+            cfg.log = '\nUnknown\n'
     except Exception as r:
         ui.messagebox.showerror('Flash error',r)
         is_err_download = True
     finally:
         if is_err_download == False:
-            ui.messagebox.showinfo('Flash','Download success')
+            ui.messagebox.showinfo('Flash','    Download Success\n' + cfg.log.split('\n')[-2])
         else:
-            ui.messagebox.showerror('Flash error','download fail')
+            ui.messagebox.showerror('Flash error',cfg.log.split('\n')[1].replace('Error ','',1))
         ui.out.edit_undo()
         ui.out.insert('end','----------Download Finish----------')
 
@@ -94,7 +103,16 @@ def erase_bin(ui):
         cmd = app_path() + '\probe-rs erase ' + \
                 '--chip %s '%cfg.chip + '--chip-description-path %s '%cfg.pack_yaml
         # print(cmd)
-        ret = os.popen(cmd).read()
+        ret = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        cfg.log = ret.communicate()[0]
+        if(cfg.log!=None):
+            cfg.log = cfg.log.decode()
+            if(cfg.log.find('Error') != -1):
+                is_err_erase =True
+        else:
+            is_err_erase =True
+            cfg.log = '\nUnknown\n'
+        # print(cfg.log)
     except Exception as r:
         is_err_erase = True
         ui.messagebox.showerror('Flash error',r)
@@ -102,9 +120,9 @@ def erase_bin(ui):
         if is_err_erase == False:
             ui.messagebox.showinfo('Flash','Erase success')
         else:
-            ui.messagebox.showerror('Flash error','erase fail')
+            ui.messagebox.showerror('Flash error',cfg.log.split('\n')[0].replace('Error: ','',1))
         ui.out.edit_undo()
-        ui.out.insert('end','-----------Erase Finish-----------')
+        ui.out.insert('end','-----------Erase Finish------------')
 
 
 class std2tk(object): 
@@ -240,7 +258,9 @@ class PyocdApp:
             self.out.delete('1.0','end')
             self.out.insert('end',"dir:%s"%(cfg.config_path))
             self.out.insert('end','\r\n')
-            # os.chdir(config_path)
+            cfg.upload()
+            if(cfg.status == False):
+                tk.messagebox.showerror('Config error',cfg.error)
             self.out.edit_separator()
             if tk.messagebox.askokcancel("Erase", "erase chip?"):
                 self.out.insert('end','-----------Start Erase-------------\r\n')
@@ -265,7 +285,7 @@ class PyocdApp:
 if __name__ == '__main__':
     app = PyocdApp()
     cfg = Cfg()
-    _std = std2tk(app)
+    # _std = std2tk(app)
     # sys.stdout = _std
     app.run()
 
