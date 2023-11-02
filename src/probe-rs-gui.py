@@ -66,9 +66,11 @@ def download_bin(ui):
     try:
         ret = ''
         #probe-rs download --chip HC32F4A0PIHB --chip-description-path .\HC32F4A0-Series.yaml  --format bin --speed 16000 bootloader.bin
-        cmd = app_path() + '\probe-rs download ' + \
+        #probe-rs cargo-flash --chip HC32F4A0PIHB --chip-description-path .\HC32F4A0-Series.yaml  --format bin --speed 16000 --path bootloader.bin
+        #use cargo-flash replease download can fast
+        cmd = app_path() + '\probe-rs cargo-flash ' + \
                 '--chip %s '%cfg.chip + '--chip-description-path %s '%cfg.pack_yaml + \
-                '--speed %s '%cfg.speed + '--format %s '%cfg.format + cfg.bin_path
+                '--speed %s '%cfg.speed + '--format %s '%cfg.format + '--path ' + cfg.bin_path
         # print(cmd)
         ret = os.popen(cmd).read()
         print(ret)
