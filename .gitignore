@@ -1,3 +1,4 @@
 build/venv/*
-build/build/probe-rs-gui/*
+build/build/*
 build/dist/*
+
