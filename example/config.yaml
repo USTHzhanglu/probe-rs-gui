@@ -1,3 +1,4 @@
 chip: HC32F4A0PGTB
 pack_yaml: ./HC32F4A0-Series.yaml
 speed: '16000'
+base_address: '0x00000000' #just for bin file,default is 0x08000000

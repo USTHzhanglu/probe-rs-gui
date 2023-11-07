@@ -33,10 +33,11 @@ class Cfg:
     def __init__(self):
         self.bin_path = ''
         self.config_path = ''
-        self.format = "bin"
-        self.pack_yaml = ""
+        self.format = 'bin'
+        self.pack_yaml = ''
         self.speed = "16000"
-        self.chip = ""
+        self.chip = ''
+        self.base_address = '0x08000000'
         self.configure = None
         self.status = False
         self.error = ''
@@ -48,11 +49,14 @@ class Cfg:
                 self.pack_yaml = self.configure.get("pack_yaml")
                 self.speed = self.configure.get("speed")
                 self.chip = self.configure.get("chip")
+                ret = self.configure.get("base_address")
+                self.base_address = ret if(ret != None) else self.base_address
                 self.format = self.bin_path.split('.')[-1]
                 if(os.path.isabs(self.pack_yaml) == False):
                     self.pack_yaml = os.path.dirname(os.path.abspath(self.config_path)) +'\\' + self.pack_yaml
                 print("format: " + self.format)
                 print("chip: " + self.chip)
+                print("chip base address: " + self.base_address)
                 print("pack path: " + self.pack_yaml)
                 print("speed: " + self.speed)
                 self.status = True
@@ -72,7 +76,10 @@ def download_bin(ui):
         #use cargo-flash replease download can fast
         cmd = app_path() + '\probe-rs cargo-flash ' + \
                 '--chip %s '%cfg.chip + '--chip-description-path %s '%cfg.pack_yaml + \
-                '--speed %s '%cfg.speed + '--format %s '%cfg.format + '--path ' + cfg.bin_path
+                '--speed %s '%cfg.speed + '--format %s '%cfg.format + '--path ' + cfg.bin_path + \
+                ' --log error'
+        if(cfg.format == 'bin'):
+            cmd +=  ' --base-address %s'%cfg.base_address
         # print(cmd)
         ret = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         cfg.log = ret.communicate()[0]
@@ -83,6 +90,7 @@ def download_bin(ui):
         else:
             is_err_download =True
             cfg.log = '\nUnknown\n'
+        print(cfg.log)
     except Exception as r:
         ui.messagebox.showerror('Flash error',r)
         is_err_download = True
@@ -112,7 +120,7 @@ def erase_bin(ui):
         else:
             is_err_erase =True
             cfg.log = '\nUnknown\n'
-        # print(cfg.log)
+        print(cfg.log)
     except Exception as r:
         is_err_erase = True
         ui.messagebox.showerror('Flash error',r)
